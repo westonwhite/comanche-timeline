@@ -153,11 +153,44 @@ input[type=range]{width:100%;height:44px;accent-color:var(--brass);cursor:pointe
 .info-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
 .info-card h3{margin:0 0 8px;font-size:16px} .info-card ul{margin:0;padding-left:18px;font-size:14px;color:var(--muted);display:grid;gap:6px}
 footer{margin-top:36px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:13px}
+
+/* PIN gate */
+body.locked .wrap{display:none}
+.pin-gate{position:fixed;inset:0;z-index:50;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;padding:20px}
+@media (prefers-color-scheme: dark){.pin-gate{background:#0a1220}}
+body:not(.locked) .pin-gate{display:none}
+.pin-card{width:100%;max-width:360px;text-align:center}
+.pin-card .reg{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+.pin-card h2{margin:8px 0 4px;font-size:28px;font-weight:900;letter-spacing:-.02em}
+.pin-card p{margin:0 0 22px;font-size:14px;opacity:.85}
+.pin-boxes{display:flex;gap:10px;justify-content:center}
+.pin-box{width:58px;height:68px;border-radius:12px;border:2px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;font-family:"IBM Plex Mono",monospace;font-size:30px;font-weight:600;text-align:center;caret-color:#e5b84a;-webkit-appearance:none;appearance:none}
+.pin-box:focus{outline:none;border-color:#e5b84a;background:rgba(255,255,255,.14)}
+.pin-error{min-height:22px;margin:14px 0 0;font-size:14px;font-weight:600;color:#fda29b;visibility:hidden}
+.pin-error.show{visibility:visible}
+.pin-card.shake .pin-boxes{animation:pinshake .3s ease}
+@keyframes pinshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 :focus-visible{outline:3px solid var(--brass);outline-offset:2px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
-<body>
+<body class="locked">
+<div class="pin-gate" id="pinGate" role="dialog" aria-modal="true" aria-labelledby="pinTitle">
+  <div class="pin-card" id="pinCard">
+    <div class="reg">Piper PA-24-180 Comanche</div>
+    <h2 id="pinTitle">N7236P Timeline</h2>
+    <p>Enter the 4-digit PIN to view the timeline.</p>
+    <form id="pinForm" autocomplete="off">
+      <div class="pin-boxes">
+        <input class="pin-box" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="PIN digit 1">
+        <input class="pin-box" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="PIN digit 2">
+        <input class="pin-box" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="PIN digit 3">
+        <input class="pin-box" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="PIN digit 4">
+      </div>
+      <p class="pin-error" id="pinError" role="alert">That PIN isn't right — try again.</p>
+    </form>
+  </div>
+</div>
 <div class="wrap">
 
   <!-- HERO -->
@@ -312,6 +345,52 @@ footer{margin-top:36px;border-top:1px solid var(--line);padding-top:16px;color:v
 </div>
 
 <script>
+/* PIN gate — soft, client-side only, as requested */
+(function(){
+  var KEY="n7236p-pin-unlocked";
+  var boxes=Array.prototype.slice.call(document.querySelectorAll(".pin-box"));
+  var card=document.getElementById("pinCard");
+  var err=document.getElementById("pinError");
+  function unlock(){
+    document.body.classList.remove("locked");
+    try{sessionStorage.setItem(KEY,"1");}catch(e){}
+  }
+  var already=false;
+  try{already=sessionStorage.getItem(KEY)==="1";}catch(e){}
+  if(already){unlock();return;}
+  function check(){
+    var pin=boxes.map(function(b){return b.value;}).join("");
+    if(pin.length<4)return;
+    if(pin==="3781"){unlock();}
+    else{
+      err.classList.add("show");
+      card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
+      boxes.forEach(function(b){b.value="";});
+      boxes[0].focus();
+    }
+  }
+  boxes.forEach(function(box,i){
+    box.addEventListener("input",function(){
+      box.value=box.value.replace(/[^0-9]/g,"").slice(-1);
+      err.classList.remove("show");
+      if(box.value&&i<boxes.length-1)boxes[i+1].focus();
+      check();
+    });
+    box.addEventListener("keydown",function(ev){
+      if(ev.key==="Backspace"&&!box.value&&i>0){boxes[i-1].focus();boxes[i-1].value="";}
+    });
+    box.addEventListener("paste",function(ev){
+      ev.preventDefault();
+      var text=((ev.clipboardData||window.clipboardData).getData("text")||"").replace(/[^0-9]/g,"").slice(0,4);
+      text.split("").forEach(function(ch,j){boxes[j].value=ch;});
+      if(text.length)boxes[Math.min(text.length,3)].focus();
+      check();
+    });
+  });
+  document.getElementById("pinForm").addEventListener("submit",function(ev){ev.preventDefault();check();});
+  boxes[0].focus();
+})();
+
 var ANNUALS=[
  {d:"1982-02-26",tach:1872,aftt:3792},{d:"1982-10-11",tach:3835,aftt:null,note:"Tach as written, pre-replacement tach"},
  {d:"1985-12-09",tach:2186,aftt:4060},{d:"1987-01-12",tach:2258,aftt:4132},{d:"1988-02-08",tach:2322,aftt:4200},
