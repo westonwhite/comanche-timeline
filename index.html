@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>Comanche Timeline — N7236P</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1f4; --surface:#ffffff; --surface2:#f7f8f9; --ink:#172433; --muted:#5b6b7f; --line:#d7dde4;
+  --navy:#1b2f4a; --navy2:#243b5a; --brass:#9a6b12; --brass-bg:#fdf3d7; --teal:#0f766e; --teal-bg:#e6f4f1;
+  --red:#b42318; --red-bg:#fef0ee; --amber:#b54708; --amber-bg:#fffaeb; --green:#027a48; --green-bg:#ecfdf3;
+  --chip:#e8edf2; --shadow:0 1px 3px rgba(16,24,40,.08),0 8px 24px rgba(16,24,40,.06);
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0d141d; --surface:#16202e; --surface2:#1a2738; --ink:#e8eef5; --muted:#9aabc0; --line:#2a3a4f;
+  --navy:#dbe7f5; --navy2:#e8eef5; --brass:#e5b84a; --brass-bg:#2e2610; --teal:#5eead4; --teal-bg:#0f2e2a;
+  --red:#fda29b; --red-bg:#3a1713; --amber:#fec84b; --amber-bg:#33270a; --green:#6ce9a6; --green-bg:#0c2e1e;
+  --chip:#22344d; --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.3); }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Libre Franklin",system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--navy)}
+button,[role="button"]{min-height:44px}
+.mono{font-family:"IBM Plex Mono",monospace}
+.serif{font-family:"Source Serif 4",Georgia,serif}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px 56px}
+
+/* Header */
+.hero{background:var(--navy);color:#fff;margin:0 -16px;padding:0}
+@media (prefers-color-scheme: dark){.hero{background:#0a1220;border-bottom:1px solid var(--line)}}
+.hero-inner{max-width:1120px;margin:0 auto;padding:22px 16px 20px}
+.hero-top{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-start}
+.reg{font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.hero h1{margin:4px 0 2px;font-size:clamp(30px,6vw,52px);line-height:.95;font-weight:900;letter-spacing:-.02em}
+.hero h1 span{font-weight:400;opacity:.85}
+.hero-sub{font-size:15px;opacity:.85;max-width:620px;margin:6px 0 0}
+.hero-specs{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.spec{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:7px 12px;font-size:13px}
+.spec b{font-family:"IBM Plex Mono",monospace;font-weight:600}
+.stamp{border:2px solid #e5b84a;color:#e5b84a;border-radius:8px;padding:8px 12px;text-align:center;transform:rotate(2deg);min-width:132px}
+.stamp .s1{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.stamp .s2{font-size:20px;font-weight:800;line-height:1}
+.stamp .s3{font-size:12px;opacity:.9}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0}
+@media(min-width:760px){.stats{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1020px){.stats{grid-template-columns:repeat(6,1fr)}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 14px 12px;box-shadow:var(--shadow)}
+.stat label{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.stat .val{font-family:"IBM Plex Mono",monospace;font-size:22px;font-weight:600;line-height:1.15;margin-top:4px}
+.stat .note{font-size:12px;color:var(--muted);margin-top:2px}
+.calc{display:inline-block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:var(--brass-bg);color:var(--brass);border:1px solid color-mix(in srgb,var(--brass) 30%,transparent);padding:1px 6px;border-radius:999px;font-weight:700;vertical-align:middle;margin-left:4px}
+
+/* Scrubber */
+.scrub-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin:18px 0}
+.scrub-head{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between}
+.scrub-head h2{margin:0;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.big-year{font-family:"IBM Plex Mono",monospace;font-size:52px;line-height:.9;font-weight:600;letter-spacing:-.03em}
+.big-year small{font-size:16px;color:var(--muted);letter-spacing:0}
+.scrub-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{appearance:none;border:1px solid var(--line);background:var(--surface2);color:var(--ink);border-radius:999px;padding:10px 16px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;min-height:44px}
+.btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+@media (prefers-color-scheme: dark){.btn.primary{background:#e5b84a;color:#111;border-color:#e5b84a}}
+.btn:active{transform:scale(.98)}
+input[type=range]{width:100%;height:44px;accent-color:var(--brass);cursor:pointer;margin:6px 0 0}
+.ticks{display:flex;justify-content:space-between;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);padding:0 2px}
+.track-viz{position:relative;height:34px;margin-top:10px;background:var(--surface2);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.track-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--navy),var(--brass));opacity:.18;transition:width .2s}
+.dot{position:absolute;top:50%;width:10px;height:10px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid var(--surface);box-shadow:0 0 0 1px var(--line)}
+.dot.major{background:var(--brass)} .dot.annual{background:var(--navy)} .dot.future{background:var(--red)}
+@media (prefers-color-scheme: dark){.dot.annual{background:#8fb8e8}}
+.decade-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.decade-row button{flex:1;min-width:72px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 6px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;min-height:40px}
+.decade-row button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+@media (prefers-color-scheme: dark){.decade-row button.active{background:#e5b84a;color:#111;border-color:#e5b84a}}
+
+/* Snapshot panel */
+.snapshot{display:grid;gap:14px;margin:14px 0 0}
+@media(min-width:820px){.snapshot{grid-template-columns:1fr 1.4fr}}
+.snap-box{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--surface2)}
+.snap-box h3{margin:0 0 10px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.kv{display:grid;grid-template-columns:1fr auto;gap:6px 12px;font-size:14px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;font-family:"IBM Plex Mono",monospace;font-weight:600;text-align:right}
+.year-events{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.year-events li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px}
+.year-events li b{display:block}
+.empty-note{color:var(--muted);font-size:14px;background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:12px}
+
+/* Sections */
+.section{margin-top:30px}
+.section-head{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between;margin-bottom:12px}
+.section-head h2{margin:0;font-size:24px;letter-spacing:-.02em}
+.section-head p{margin:0;color:var(--muted);font-size:14px;max-width:640px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:9px 14px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;min-height:40px}
+.chip.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+@media (prefers-color-scheme: dark){.chip.active{background:#e5b84a;color:#111;border-color:#e5b84a}}
+.count-line{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
+
+/* Timeline */
+.timeline{position:relative;margin-top:8px}
+.timeline::before{content:"";position:absolute;left:19px;top:8px;bottom:8px;width:2px;background:var(--line)}
+@media(min-width:700px){.timeline::before{left:50%;margin-left:-1px}}
+.evt{position:relative;padding:0 0 14px 52px}
+@media(min-width:700px){.evt{width:50%;padding:0 28px 18px 0;text-align:right}.evt:nth-child(even){margin-left:50%;padding:0 0 18px 28px;text-align:left}}
+.evt .pin{position:absolute;left:12px;top:14px;width:16px;height:16px;border-radius:50%;background:var(--surface);border:3px solid var(--navy);z-index:1}
+@media(min-width:700px){.evt .pin{left:auto;right:-8px}.evt:nth-child(even) .pin{left:-8px;right:auto}}
+.evt.major .pin{border-color:var(--brass);width:20px;height:20px;top:12px}
+@media(min-width:700px){.evt.major .pin{right:-10px}.evt.major:nth-child(even) .pin{left:-10px}}
+.evt.future .pin{border-color:var(--red)} .evt.gap .pin{border-color:var(--red);border-style:dashed}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);text-align:left}
+.evt.dim{opacity:.38} .evt.dim .card{box-shadow:none}
+.card-top{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:space-between}
+.date{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--muted)}
+.badge{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px}
+.b-annual{background:var(--chip);color:var(--ink)} .b-major{background:var(--brass-bg);color:var(--brass)} .b-ad{background:var(--teal-bg);color:var(--teal)}
+.b-oil{background:#eef2ff;color:#3538cd} @media (prefers-color-scheme: dark){.b-oil{background:#1e2440;color:#b2ccff}}
+.b-due{background:var(--red-bg);color:var(--red)} .b-gap{background:var(--red-bg);color:var(--red)}
+.card h3{margin:6px 0 4px;font-size:17px;line-height:1.25}
+.card p{margin:0;font-size:14px;color:var(--muted)}
+.card .nums{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+.num{font-family:"IBM Plex Mono",monospace;font-size:12px;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:4px 8px}
+
+/* Due board */
+.due-grid{display:grid;gap:10px}
+@media(min-width:760px){.due-grid{grid-template-columns:1fr 1fr}}
+.due{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;gap:12px;box-shadow:var(--shadow)}
+.due .bar{width:5px;border-radius:999px;flex:none}
+.due.soon .bar{background:var(--red)} .due.next .bar{background:#f79009} .due.ok .bar{background:var(--green)} .due.flag .bar{background:var(--red)}
+.due h3{margin:0 0 2px;font-size:15px} .due p{margin:0;font-size:13px;color:var(--muted)}
+.due .when{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px;white-space:nowrap}
+
+/* Annual strip */
+.annual-wrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.annual-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;margin-top:12px}
+.annual-cell{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--surface2)}
+.annual-cell b{font-family:"IBM Plex Mono",monospace;font-size:14px}
+.annual-cell span{display:block;font-size:12px;color:var(--muted);font-family:"IBM Plex Mono",monospace}
+.annual-cell.missing{border-style:dashed;border-color:var(--red);background:var(--red-bg)}
+.annual-cell.missing b{color:var(--red)}
+
+.notice{background:var(--red-bg);border:1px solid color-mix(in srgb,var(--red) 35%,transparent);border-radius:14px;padding:16px}
+.notice h3{margin:0 0 6px;color:var(--red)} .notice p{margin:0;font-size:14px}
+.two{display:grid;gap:12px} @media(min-width:760px){.two{grid-template-columns:1fr 1fr}}
+.info-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.info-card h3{margin:0 0 8px;font-size:16px} .info-card ul{margin:0;padding-left:18px;font-size:14px;color:var(--muted);display:grid;gap:6px}
+footer{margin-top:36px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:13px}
+:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-top">
+        <div>
+          <div class="reg">Piper PA-24-180 Comanche &nbsp;•&nbsp; Serial 24-2410</div>
+          <h1>N7236P <span>Timeline</span></h1>
+          <p class="hero-sub">Every annual, overhaul, modification and Airworthiness Directive in the logbooks — from the first annual in these books in 1982 to what comes due next. Drag the year slider to travel through the airplane's life.</p>
+          <div class="hero-specs">
+            <span class="spec">Engine <b>Lycoming O-360-A1D · L-151-36</b></span>
+            <span class="spec">Prop <b>Hartzell HC-C2YR-1BF/F7666A-4 · CH38233B</b></span>
+            <span class="spec">Source <b>57 logbook photos · read Nov 9, 2026</b></span>
+          </div>
+        </div>
+        <div class="stamp" aria-label="Latest annual September 2 2026">
+          <div class="s1">Latest annual</div><div class="s2">Sep 2, 2026</div><div class="s3">Tach 3725.34</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS AT LATEST ANNUAL -->
+  <section class="stats" aria-label="Times at latest annual, September 2 2026">
+    <div class="stat"><label>Airframe total</label><div class="val">5,602.34</div><div class="note">AFTT at Sep 2026 annual</div></div>
+    <div class="stat"><label>Tach</label><div class="val">3,725.34</div><div class="note">New tach since Nov 25, 1983</div></div>
+    <div class="stat"><label>Engine total</label><div class="val">3,010.54</div><div class="note">Lycoming O-360-A1D</div></div>
+    <div class="stat"><label>Since major overhaul</label><div class="val">873.44</div><div class="note">SMOH · overhaul Aug 25, 1997</div></div>
+    <div class="stat"><label>To 2,000-hr TBO*</label><div class="val">1,126.56 <span class="calc">Calculated</span></div><div class="note">*Recommended figure, not confirmed in SI 1009; not a Part 91 deadline</div></div>
+    <div class="stat"><label>Propeller total</label><div class="val">585.02 <span class="calc">Calculated</span></div><div class="note">Last written TTSN 204.08 (Jan 15, 2015)</div></div>
+  </section>
+  <p class="serif" style="margin:0 0 4px;font-size:15px;color:var(--muted)">Compressions at the latest annual: <b class="mono" style="color:var(--ink)">78 / 78 / 78 / 77</b> over 80. Time since top overhaul: <b class="mono" style="color:var(--ink)">330.94 hrs</b> <span class="calc">Calculated</span> — a top overhaul does not reset SMOH. Flying since Sep 2, 2026 is not in these logbooks, so today's times are the annual figures plus that unrecorded flying.</p>
+
+  <!-- SCRUBBER -->
+  <section class="scrub-card" aria-label="Year scrubber">
+    <div class="scrub-head">
+      <div>
+        <h2>Scrub the years</h2>
+        <div class="big-year"><span id="bigYear">2026</span> <small id="bigYearLabel">— latest annual</small></div>
+      </div>
+      <div class="scrub-actions">
+        <button class="btn" id="playBtn" type="button">▶ Play 1982 → 2029</button>
+        <button class="btn primary" id="todayBtn" type="button">Jump to 2026</button>
+      </div>
+    </div>
+    <input type="range" id="yearSlider" min="1982" max="2029" step="1" value="2026" aria-label="Select year" aria-describedby="sliderHelp">
+    <div class="ticks"><span>1982</span><span>1990</span><span>1997</span><span>2004</span><span>2019</span><span>2026</span><span>2029 due</span></div>
+    <div class="track-viz" id="trackViz" aria-hidden="true"><div class="track-fill" id="trackFill"></div></div>
+    <p id="sliderHelp" style="margin:8px 0 0;font-size:13px;color:var(--muted)">Gold dots are major work, navy dots are annuals, red dots are future due items. The panel below shows where the airplane stood at the end of the selected year. Cards further down the page dim once they are still in the future for that year.</p>
+    <div class="decade-row" role="group" aria-label="Jump by era">
+      <button type="button" data-jump="1985">1980s</button>
+      <button type="button" data-jump="1997">1990s · Overhaul</button>
+      <button type="button" data-jump="2004">2000s · New prop</button>
+      <button type="button" data-jump="2019">2010s · Top overhaul</button>
+      <button type="button" data-jump="2026" class="active">2020s · Now</button>
+      <button type="button" data-jump="2029">Coming due →</button>
+    </div>
+
+    <div class="snapshot">
+      <div class="snap-box">
+        <h3 id="snapTitle">Where she stood — end of 2026</h3>
+        <dl class="kv" id="snapKv"></dl>
+        <p id="snapNote" style="margin:10px 0 0;font-size:13px;color:var(--muted)"></p>
+      </div>
+      <div class="snap-box">
+        <h3 id="yearEventsTitle">What happened in 2026</h3>
+        <ul class="year-events" id="yearEvents"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="section" id="timelineSection">
+    <div class="section-head">
+      <div><h2>The full timeline</h2><p>Everything from the database, in order. Annuals, major work, AD compliance, and key oil changes — nothing invented, gaps left as gaps.</p></div>
+      <span class="count-line" id="countLine"></span>
+    </div>
+    <div class="filters" role="group" aria-label="Filter timeline">
+      <button class="chip active" type="button" data-filter="all">All events</button>
+      <button class="chip" type="button" data-filter="annual">Annuals only</button>
+      <button class="chip" type="button" data-filter="major">Major work &amp; mods</button>
+      <button class="chip" type="button" data-filter="ad">ADs</button>
+      <button class="chip" type="button" data-filter="oil">Oil changes</button>
+      <button class="chip" type="button" data-filter="due">Coming due</button>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <!-- COMING DUE -->
+  <section class="section">
+    <div class="section-head"><div><h2>Coming due board</h2><p>From the September 2026 annual stickers. Tach due items are measured from tach 3725.34 at that annual.</p></div></div>
+    <div class="due-grid">
+      <div class="due soon"><div class="bar"></div><div style="flex:1"><h3>ELT battery — BP1010</h3><p>Replaced at the Sep 2026 annual. Nearest calendar item on the board.</p></div><div class="when">Dec 2026</div></div>
+      <div class="due next"><div class="bar"></div><div style="flex:1"><h3>AD 68-13-03 — fuel cell collapse, visual</h3><p>About 49.4 tach hours past the 2026 annual.</p></div><div class="when">Tach 3774.7</div></div>
+      <div class="due next"><div class="bar"></div><div style="flex:1"><h3>AD 94-13-10 — stabilator bearing / torque tube, visual</h3><p>100 tach hours past the 2026 annual.</p></div><div class="when">Tach 3825.34</div></div>
+      <div class="due next"><div class="bar"></div><div style="flex:1"><h3>AD 79-20-10 — aileron nose rib (left only)</h3><p>100 tach hours past the 2026 annual.</p></div><div class="when">Tach 3825.34</div></div>
+      <div class="due next"><div class="bar"></div><div style="flex:1"><h3>AD 75-12-06 — vertical fin forward spar, magnified visual</h3><p>100 tach hours past the 2026 annual.</p></div><div class="when">Tach 3825.34</div></div>
+      <div class="due next"><div class="bar"></div><div style="flex:1"><h3>AD 76-07-12 — Bendix ignition switch grounding</h3><p>100 tach hours past the 2026 annual.</p></div><div class="when">Tach 3825.34</div></div>
+      <div class="due ok"><div class="bar"></div><div style="flex:1"><h3>Next annual inspection</h3><p>12 calendar months after Sep 2, 2026.</p></div><div class="when">Sep 2027</div></div>
+      <div class="due ok"><div class="bar"></div><div style="flex:1"><h3>AD 77-13-21 (B) gear bungees + AD 74-13-03 stabilator attach bolts</h3><p>Bungees replaced Jul 2025 with new 8097 cords.</p></div><div class="when">4174.7 / Jul 2028</div></div>
+      <div class="due ok"><div class="bar"></div><div style="flex:1"><h3>AD 2012-17-06 — stabilator horn (SB 1189)</h3><p>Last complied by dye penetrant Apr 10, 2024.</p></div><div class="when">Apr 2029 / 4124.9</div></div>
+      <div class="due ok"><div class="bar"></div><div style="flex:1"><h3>AD 97-01-01 — MLG side brace stud, dye penetrant</h3><p>Last complied Apr 10, 2024.</p></div><div class="when">Tach 4624.9</div></div>
+    </div>
+    <div class="notice" style="margin-top:12px">
+      <h3>⚠ Flag — transponder / altimeter currency (91.411 / 91.413)</h3>
+      <p>The 2024, 2025 and 2026 annual stickers still carry a “VFR 12-2021” header, and the newest transponder recertification in these albums is <b>December 20, 2019</b> (due then Dec 31, 2021). No current test record appears in the logbooks photographed — verify against records kept outside the logbooks before making flight-status claims.</p>
+    </div>
+  </section>
+
+  <!-- ANNUAL HISTORY -->
+  <section class="section">
+    <div class="section-head"><div><h2>Annual inspection history — 1982 to 2026</h2><p>Every annual found on the pages. The tach was replaced Nov 25, 1983 (old 3844.8 → new 1966.8), which explains the ~1,877.9-hour offset between tach and AFTT throughout the books.</p></div></div>
+    <div class="annual-wrap">
+      <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted)"><span><b style="color:var(--ink)" id="annualCount"></b> annuals on record</span><span>Missing: <b style="color:var(--red)">2018</b> and <b style="color:var(--red)">2022</b></span><span>ADs checked through 2026-18 at the latest annual</span></div>
+      <div class="annual-grid" id="annualGrid"></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Notes as written: the Oct 11, 1982 entry shows tach 3835 on the pre-replacement tach. The 1994 AFTT (4435) is inconsistent with the 1992 figures, as written. For Feb 2001 the books disagree — engine book tach 2983.0, airframe book corrects to 3013.0 / AFTT 4870.9. The 2013 tach reads 3324.53 in two books (once read as 3321.53).</p>
+    </div>
+  </section>
+
+  <!-- DETAILS -->
+  <section class="section">
+    <div class="two">
+      <div class="info-card">
+        <h3>Latest annual — Sep 2, 2026, in detail</h3>
+        <ul>
+          <li>Oil &amp; filter: 8 qt Phillips Victory 100AW, Tempest AA48110-2</li>
+          <li>New BA3 intake filter; muffler right end cap welded; valve cover screws tightened</li>
+          <li>ETX900-TSO lithium battery + 35-PA kit installed</li>
+          <li>All three struts resealed with Webco WGK3 kits</li>
+          <li>ELT battery BP1010 replaced — next due Dec 2026</li>
+          <li>AD 26-04-11 (connecting rod bushings) marked not applicable by engine build date</li>
+          <li>Signed A&amp;P 30473631A</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Kept honest — discrepancies on the pages</h3>
+        <ul>
+          <li>Hartzell factory form lists both blades as K06856; the prop log lists K06855 / K06856 — check the physical blades.</li>
+          <li>No propeller overhaul entry appears anywhere in these books.</li>
+          <li>“Blue marks mean first-run cylinders” — <b>not confirmed</b>. Both the 1997 and 2019 cylinders were overhauled assemblies.</li>
+          <li>Prop log handwriting for 2016, 2017 and 2019 is not reliably readable; a few older pages are partly legible and some photo edges cut off text.</li>
+          <li>Weight &amp; balance: weighed Aug 14, 1985 at 1,575 lbs, CG 82 in. Reweighed in 1997 after the Knots 2U mods — new figures issued but not on the photographed page.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Built from the complete logbook database for N7236P (Piper PA-24-180, serial 24-2410), transcribed Nov 9, 2026 from 57 photographs across the engine, airframe and propeller logs. Figures marked <span class="calc">Calculated</span> are arithmetic from logged figures, not numbers written on a page. This page is a companion view of those records — the logbooks themselves remain the official record. A matching Timeline tab is in the Comanche app v2.4.
+  </footer>
+</div>
+
+<script>
+var ANNUALS=[
+ {d:"1982-02-26",tach:1872,aftt:3792},{d:"1982-10-11",tach:3835,aftt:null,note:"Tach as written, pre-replacement tach"},
+ {d:"1985-12-09",tach:2186,aftt:4060},{d:"1987-01-12",tach:2258,aftt:4132},{d:"1988-02-08",tach:2322,aftt:4200},
+ {d:"1989-03-06",tach:2383.20,aftt:4257},{d:"1990-06-04",tach:2411,aftt:4324},{d:"1991-06-11",tach:2510,aftt:4388},
+ {d:"1992-12-01",tach:2525,aftt:4423},{d:"1994-03-10",tach:2572,aftt:4435,note:"As written, inconsistent with 1992 figures"},
+ {d:"1995-06-20",tach:2635,aftt:4513},{d:"1996-06-26",tach:2745.9,aftt:4623.0,ett:2045.9},
+ {d:"1997-09-11",tach:2851.1,aftt:4729.0,ett:2137.4,smoh:0},{d:"1999-01-23",tach:2912.8,aftt:null,smoh:61.7},
+ {d:"2000-02-02",tach:2973.0,aftt:4850.9,smoh:121.9},{d:"2001-02-18",tach:2983.0,aftt:4870.9,smoh:190.05,note:"Books disagree — airframe book corrects tach to 3013.0"},
+ {d:"2002-03-20",tach:3061.15,aftt:4919.15,smoh:258.20},{d:"2003-05-01",tach:3089.42,aftt:4947.42,smoh:286.47},
+ {d:"2004-09-01",tach:3139.42,aftt:5017.32,ett:2425.72,smoh:288.32},{d:"2005-09-30",tach:3188.75,aftt:5066.65,smoh:337.65},
+ {d:"2006-10-01",tach:3226.61,aftt:5104.51,smoh:375.51},{d:"2007-11-01",tach:3243.28,aftt:5121.18,smoh:392.18},
+ {d:"2008-11-01",tach:3260.0,aftt:5137.90,smoh:458.9},{d:"2010-01-12",tach:3276,aftt:5153},
+ {d:"2012-03-01",tach:3310,aftt:5187,ett:2596.7,smoh:458.9},{d:"2013-11-01",tach:3324.53,aftt:5201.53,ett:2610.83,smoh:473.43},
+ {d:"2015-01-15",tach:3343.50,aftt:5220.50,ett:2629.80,smoh:492.40},{d:"2016-02-15",tach:3365,aftt:5242,ett:2651,smoh:513.9},
+ {d:"2017-10-02",tach:3375.88,aftt:5252,ett:2661,smoh:523.9},{d:"2019-06-03",tach:3394.4,aftt:5270.6,ett:2679.6,smoh:542.5},
+ {d:"2020-09-15",tach:3432.0,aftt:5309.0,ett:2717.2,smoh:580.1},{d:"2021-11-08",tach:3519.0,aftt:5396.0,ett:2804.2,smoh:667.1},
+ {d:"2023-01-21",tach:3589.0,aftt:5466.0,ett:2874.2,smoh:737.1},{d:"2024-04-10",tach:3624.9,aftt:5501.9,ett:2910.1,smoh:773.0},
+ {d:"2025-07-01",tach:3674.7,aftt:5551.7,ett:2959.9,smoh:822.8},{d:"2026-09-02",tach:3725.34,aftt:5602.34,ett:3010.54,smoh:873.44}
+];
+function fmt(n){return n==null?"—":Number(n).toLocaleString("en-US",{minimumFractionDigits:(String(n).indexOf(".")>-1?2:0),maximumFractionDigits:2});}
+function fmtDate(iso){var p=iso.split("-");var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];return M[parseInt(p[1],10)-1]+" "+parseInt(p[2],10)+", "+p[0];}
+
+/* Build timeline events: annuals auto-generated + curated events */
+var EVENTS=[];
+ANNUALS.forEach(function(a){
+  EVENTS.push({date:a.d,year:parseInt(a.d.slice(0,4),10),type:"annual",title:"Annual inspection",desc:"Annual signed off and recorded in the logbooks."+(a.note?" "+a.note:""),nums:[["Tach",fmt(a.tach)],["AFTT",fmt(a.aftt)],["SMOH",a.smoh==null?"—":fmt(a.smoh)]]});
+});
+var CURATED=[
+ {date:"1983-11-25",type:"major",title:"Tachometer replaced",desc:"Old tach 3844.8 removed, new tach started at 1966.8. This one change accounts for the ~1,877.9-hour offset between tach and AFTT in every later entry."},
+ {date:"1985-08-01",type:"major",title:"S-Tec System 40 autopilot installed",desc:"System 40 ST-195-40 with directional gyro, STC SA-5208SW-D. The only autopilot entry in the books through the 2026 annual. Weighed Aug 14, 1985: empty 1,575 lbs, CG 82 in."},
+ {date:"1989-05-25",type:"major",title:"3M WX-P Stormscope installed",desc:"Stormscope fitted under a Form 337."},
+ {date:"1996-01-24",type:"ad",title:"Magneto ADs complied — AD 94-01-03 R2 / 94-06-09",desc:"Compliance recorded for both magnetos (originally S4LN-200 left, S4LN-204 right)."},
+ {date:"1997-08-25",type:"major",title:"★ Engine major overhaul — Rothermel",desc:"Certified Sep 2, 1997. Tach 2851.10, engine TT 2137.40, SMOH reset to 0. Crankcase by Divco; crank, cam and rods by Cam Corp; cylinders overhauled by D&S Aviation with +.010 pistons and rings; new bearings, lifters, gaskets and oil pump parts; Sky-Tec starter per STC SE00218NY. No later major overhaul appears in the books.",nums:[["Tach","2,851.10"],["Engine TT","2,137.40"],["SMOH","0"]]},
+ {date:"1997-09-09",type:"major",title:"Knots 2U speed mods + reweigh",desc:"Gear lobe fairings (STC SA1716L), wing fillet and root fairings, aileron/flap gap seals (STC SA526GL). Aircraft reweighed and a new weight & balance issued — the new figures are not on the photographed page."},
+ {date:"1997-09-28",type:"oil",title:"Oil change — post-overhaul",desc:"Aeroshell 100 mineral, 8 qt, Champion 48110 filter cut open with no unusual particles. Tach 2856.11."},
+ {date:"2004-09-06",type:"major",title:"★ New Hartzell propeller installed",desc:"Hartzell HC-C2YR-1BF/F7666A-4, S/N CH38233B, at 0 time since new, per STC SA00631CH with a 337 dated Jul 26, 2004. Spinner 835-54P. Blades as logged: K06855 / K06856. Tach 3139.42, AFTT 5017.32. No propeller overhaul entry appears anywhere in the books.",nums:[["Tach","3,139.42"],["AFTT","5,017.32"],["Prop TSN","0"]]},
+ {date:"2015-01-15",type:"major",title:"#1 cylinder repair + magneto 500-hour inspections",desc:"#1 cylinder exhaust guide removed and repaired, cylinder reinstalled with a new gasket kit. Both magnetos given 500-hour inspections with new points, capacitors, bearings and gear kits. Prop TTSN last written here: 204.08."},
+ {date:"2015-01-15",type:"oil",title:"Oil change — at annual",desc:"7 qt Aeroshell 100, AA48110-2 filter. Tach 3343.50."},
+ {date:"2018-01-01",type:"gap",title:"No 2018 annual entry",desc:"Gap in the books: the only 2018 record is a Nov 15, 2018 AD compliance entry. There is no 2018 annual inspection entry.",gapYear:2018},
+ {date:"2019-06-03",type:"major",title:"★ Top overhaul — four cylinders",desc:"Four overhauled cylinder assemblies installed at tach 3394.4, SMOH 542.5. Compressions 78 / illegible / 78 / 70. A top overhaul does not reset SMOH or the TBO clock — only a major overhaul does. Time since this top overhaul at the 2026 annual: 330.94 hrs (calculated).",nums:[["Tach","3,394.4"],["SMOH","542.5"]]},
+ {date:"2019-07-01",type:"major",title:"uAvionix skyBeacon ADS-B Out",desc:"skyBeacon S/N 1006103 fitted in the left wingtip — ADS-B Out for the 2020 mandate."},
+ {date:"2019-12-20",type:"ad",title:"Last transponder recertification in the books",desc:"Newest transponder/altimeter recert in these albums, due then Dec 31, 2021. Later annual stickers still say “VFR 12-2021” — see the flag on the coming-due board."},
+ {date:"2020-09-15",type:"major",title:"Exhaust stacks replaced — cylinders 2, 3 & 4",desc:"New exhaust stack assemblies fitted at the annual."},
+ {date:"2020-09-15",type:"oil",title:"Oil change — at annual",desc:"Aero Shell 100 straight mineral, CH48110-1 filter. Tach 3432.0."},
+ {date:"2021-11-08",type:"major",title:"★ SureFly ignition + Electronics International gauges",desc:"SureFly electronic ignition replaced the left magneto (337); right magneto given its 500-hour inspection and retimed to 25° BTDC. EI EAC-1 EGT/CHT/OAT gauge and FP-5 fuel flow with FT-60 transducer installed (337s). Log note: the CHT gauge must be kept operable."},
+ {date:"2021-11-08",type:"oil",title:"Oil change — at annual",desc:"Phillips Victory 100AW, CH48110-1 filter. Tach 3519.0."},
+ {date:"2022-01-01",type:"gap",title:"No 2022 annual entry",desc:"Gap in the books: the Jan 21, 2023 annual follows the Nov 8, 2021 annual directly. There is no 2022 annual inspection entry.",gapYear:2022},
+ {date:"2023-01-21",type:"ad",title:"Magneto timing checked; SureFly checked",desc:"Mag timing adjusted and SureFly ignition checked at the annual."},
+ {date:"2024-04-10",type:"ad",title:"ADs complied by dye penetrant — stabilator horn & side brace stud",desc:"AD 2012-17-06 stabilator horn and AD 97-01-01 MLG side brace stud both complied by dye-penetrant inspection at this annual. Their next dues are on the coming-due board."},
+ {date:"2025-07-01",type:"major",title:"Gear bungees replaced + brakes resealed",desc:"Landing gear bungees replaced with new 8097 cords; brake calipers resealed. This replacement sets the next bungee due: tach 4174.7 or Jul 2028."},
+ {date:"2026-09-02",type:"major",title:"★ Latest annual — Sep 2, 2026",desc:"Tach 3725.34, AFTT 5602.34, engine TT 3010.54, SMOH 873.44. Compressions 78/78/78/77. New BA3 filter, muffler end cap welded, ETX900-TSO lithium battery, all three struts resealed, ELT battery replaced. ADs checked through 2026-18; AD 26-04-11 N/A by build date. Signed A&P 30473631A.",nums:[["Tach","3,725.34"],["AFTT","5,602.34"],["SMOH","873.44"]]},
+ {date:"2026-09-02",type:"oil",title:"Oil change — at annual",desc:"8 qt Phillips Victory 100AW, Tempest AA48110-2 filter. Tach 3725.34."},
+ {date:"2026-09-29",type:"oil",title:"Oil change — Alpha One invoice 5826",desc:"8 qt Phillips Victory 100AW SAE 50, AA48110-2 filter. The latest oil change on any record. Invoice record, not a logbook entry; the invoice states no hours."},
+ {date:"2026-12-01",type:"due",title:"DUE — ELT battery (BP1010)",desc:"Due December 2026, replaced at the Sep 2026 annual. The nearest item on the board."},
+ {date:"2027-06-01",type:"due",title:"DUE — AD 68-13-03 at tach 3774.7",desc:"Fuel cell collapse, visual inspection. About 49.4 tach hours past the 2026 annual tach of 3725.34. Plotted in 2027 — it is a tach limit, not a calendar date."},
+ {date:"2027-09-01",type:"due",title:"DUE — Next annual + four ADs at tach 3825.34",desc:"Annual due Sep 2027. At tach 3825.34 (100 hrs past the 2026 annual): AD 94-13-10 stabilator bearing/torque tube, AD 79-20-10 aileron nose rib, AD 75-12-06 vertical fin spar, AD 76-07-12 Bendix switch grounding."},
+ {date:"2028-07-01",type:"due",title:"DUE — Bungees & AD 74-13-03 at tach 4174.7 or Jul 2028",desc:"AD 77-13-21 (B) gear bungees and AD 74-13-03 stabilator attach bolts, visual."},
+ {date:"2029-04-01",type:"due",title:"DUE — Stabilator horn Apr 2029 or tach 4124.9; side brace stud at 4624.9",desc:"AD 2012-17-06 stabilator horn due Apr 2029 or tach 4124.9, whichever the sticker reaches first. AD 97-01-01 MLG side brace stud due at tach 4624.9."}
+];
+CURATED.forEach(function(e){e.year=parseInt(e.date.slice(0,4),10);EVENTS.push(e);});
+EVENTS.sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0;});
+
+var BADGES={annual:["Annual","b-annual"],major:["Major work","b-major"],ad:["AD","b-ad"],oil:["Oil","b-oil"],due:["Coming due","b-due"],gap:["Gap","b-gap"]};
+var timelineEl=document.getElementById("timeline");
+var currentFilter="all", currentYear=2026;
+
+function renderTimeline(){
+  timelineEl.innerHTML="";
+  var shown=0;
+  EVENTS.forEach(function(e){
+    if(currentFilter!=="all" && e.type!==currentFilter && !(currentFilter==="due"&&e.type==="due")) return;
+    if(currentFilter==="ad" && !(e.type==="ad"||e.type==="due")) return;
+    shown++;
+    var div=document.createElement("article");
+    div.className="evt "+(e.type==="major"?"major ":"")+(e.type==="due"?"future ":"")+(e.type==="gap"?"gap ":"")+((e.year>currentYear)?"dim":"");
+    div.dataset.year=e.year;
+    var b=BADGES[e.type]||BADGES.major;
+    var nums=(e.nums||[]).map(function(n){return '<span class="num">'+n[0]+' '+n[1]+'</span>';}).join("");
+    div.innerHTML='<span class="pin" aria-hidden="true"></span><div class="card"><div class="card-top"><span class="date">'+(e.type==="gap"?e.gapYear:fmtDate(e.date))+'</span><span class="badge '+b[1]+'">'+b[0]+'</span></div><h3>'+e.title+'</h3><p>'+e.desc+'</p>'+(nums?'<div class="nums">'+nums+'</div>':"")+'</div>';
+    timelineEl.appendChild(div);
+  });
+  document.getElementById("countLine").textContent=shown+" events shown · scrub year "+currentYear;
+}
+document.querySelectorAll("[data-filter]").forEach(function(btn){
+  btn.addEventListener("click",function(){
+    document.querySelectorAll("[data-filter]").forEach(function(x){x.classList.remove("active");});
+    btn.classList.add("active"); currentFilter=btn.dataset.filter; renderTimeline();
+  });
+});
+
+/* Annual grid */
+var grid=document.getElementById("annualGrid");
+var yearsPresent={}; ANNUALS.forEach(function(a){yearsPresent[parseInt(a.d.slice(0,4),10)]=a;});
+document.getElementById("annualCount").textContent=ANNUALS.length;
+for(var y=1982;y<=2026;y++){
+  var cell=document.createElement("div");
+  if(y===2018||y===2022){cell.className="annual-cell missing";cell.innerHTML="<b>"+y+" — NO ANNUAL</b><span>No annual entry in the books"+(y===2018?" (Nov 2018 AD entry only)":"")+"</span>";}
+  else if(yearsPresent[y]){var a=yearsPresent[y];cell.className="annual-cell";cell.innerHTML="<b>"+fmtDate(a.d)+"</b><span>Tach "+fmt(a.tach)+" · AFTT "+fmt(a.aftt)+(a.smoh!=null?" · SMOH "+fmt(a.smoh):"")+"</span>";}
+  else{cell.className="annual-cell";cell.innerHTML="<b>"+y+"</b><span>No annual dated in this year</span>";}
+  grid.appendChild(cell);
+}
+
+/* Track viz dots */
+var viz=document.getElementById("trackViz");
+EVENTS.forEach(function(e){
+  if(e.type==="gap")return;
+  var pct=((e.year-1982)/(2029-1982))*100;
+  var d=document.createElement("span");
+  d.className="dot "+(e.type==="major"?"major":e.type==="due"?"future":"annual");
+  d.style.left="calc("+pct+"% )"; d.style.left=pct+"%";
+  viz.appendChild(d);
+});
+
+/* Scrubber logic */
+var slider=document.getElementById("yearSlider");
+var LABELS={1982:"— first annual in these books",1983:"— tach replaced",1985:"— S-Tec autopilot",1989:"— Stormscope",1997:"— major overhaul",2004:"— new Hartzell prop",2018:"— ⚠ no annual this year",2019:"— top overhaul + skyBeacon",2021:"— SureFly + EI gauges",2022:"— ⚠ no annual this year",2025:"— bungees & brakes",2026:"— latest annual",2027:"— ADs at tach 3825.34",2028:"— bungees due",2029:"— stabilator horn due"};
+function nearestAnnual(year){
+  var best=null; ANNUALS.forEach(function(a){var ay=parseInt(a.d.slice(0,4),10); if(ay<=year) best=a;}); return best;
+}
+function updateYear(year){
+  currentYear=year;
+  document.getElementById("bigYear").textContent=year;
+  document.getElementById("bigYearLabel").textContent=LABELS[year]||(year>2026?"— coming due":"");
+  document.getElementById("trackFill").style.width=(((year-1982)/(2029-1982))*100)+"%";
+  document.querySelectorAll("[data-jump]").forEach(function(b){b.classList.toggle("active",parseInt(b.dataset.jump,10)===year);});
+  var a=nearestAnnual(Math.min(year,2026));
+  var kv=document.getElementById("snapKv"); var note=document.getElementById("snapNote");
+  document.getElementById("snapTitle").textContent="Where she stood — end of "+Math.min(year,2026)+(a?" (annual "+fmtDate(a.d)+")":"");
+  if(a){
+    var smoh=a.smoh, rows="";
+    rows+="<div style='display:contents'><dt>Last annual</dt><dd>"+fmtDate(a.d)+"</dd></div>";
+    rows+="<div style='display:contents'><dt>Tach</dt><dd>"+fmt(a.tach)+"</dd></div>";
+    rows+="<div style='display:contents'><dt>AFTT</dt><dd>"+fmt(a.aftt)+"</dd></div>";
+    if(a.ett!=null)rows+="<div style='display:contents'><dt>Engine TT</dt><dd>"+fmt(a.ett)+"</dd></div>";
+    if(smoh!=null)rows+="<div style='display:contents'><dt>SMOH</dt><dd>"+fmt(smoh)+"</dd></div>";
+    if(smoh!=null)rows+="<div style='display:contents'><dt>To 2,000-hr TBO*</dt><dd>"+fmt(2000-smoh)+" <span class='calc'>Calc</span></dd></div>";
+    if(a.d>="2004-09-06"&&a.aftt!=null)rows+="<div style='display:contents'><dt>Prop TTSN</dt><dd>"+fmt(a.aftt-5017.32)+" <span class='calc'>Calc</span></dd></div>";
+    kv.innerHTML=rows;
+    note.textContent= year>2026 ? "Past 2026 the logbooks in this database end — the right panel lists what comes due. *TBO figure is the commonly cited recommendation, unconfirmed against SI 1009." : (year===2018||year===2022 ? "⚠ No annual was recorded in "+year+" — the snapshot uses the most recent annual before it." : "*TBO figure is the commonly cited recommendation, unconfirmed against SI 1009; not a legal deadline for Part 91.");
+  }
+  var list=document.getElementById("yearEvents");
+  document.getElementById("yearEventsTitle").textContent="What happened in "+year;
+  var inYear=EVENTS.filter(function(e){return e.year===year;});
+  if(!inYear.length){list.innerHTML='<li class="empty-note" style="list-style:none">No dated logbook event in '+year+' in this database. Annuals were not always yearly — check the annual grid below for the surrounding years.</li>';}
+  else{list.innerHTML=inYear.map(function(e){var b=BADGES[e.type];return "<li><b>"+e.title+"</b><span style='color:var(--muted)'>"+e.desc+"</span></li>";}).join("");}
+  renderTimeline();
+}
+slider.addEventListener("input",function(){stopPlay();updateYear(parseInt(slider.value,10));});
+document.getElementById("todayBtn").addEventListener("click",function(){stopPlay();slider.value=2026;updateYear(2026);});
+document.querySelectorAll("[data-jump]").forEach(function(b){b.addEventListener("click",function(){stopPlay();slider.value=b.dataset.jump;updateYear(parseInt(b.dataset.jump,10));document.querySelector(".scrub-card").scrollIntoView({behavior:"smooth",block:"start"});});});
+
+/* Play */
+var timer=null;
+function stopPlay(){if(timer){clearInterval(timer);timer=null;document.getElementById("playBtn").textContent="▶ Play 1982 → 2029";}}
+document.getElementById("playBtn").addEventListener("click",function(){
+  if(timer){stopPlay();return;}
+  if(parseInt(slider.value,10)>=2029)slider.value=1982;
+  this.textContent="⏸ Pause";
+  timer=setInterval(function(){
+    var v=parseInt(slider.value,10)+1;
+    if(v>2029){stopPlay();return;}
+    slider.value=v; updateYear(v);
+  },650);
+});
+updateYear(2026);
+</script>
+</body>
+</html>
